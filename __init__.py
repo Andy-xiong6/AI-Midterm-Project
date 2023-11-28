@@ -38,7 +38,7 @@ Multi-layer Perceptron with single hidden layer but different numbers of neurons
 '''
 #import data
 train_data = np.loadtxt('dataset/dataset_LR/train.data', delimiter=',')
-train_input = train_data[:,0:2]
+train_input = train_data[:,0:2] # size: n x 2
 train_label = train_data[:,2] # size: n x 1
 
 test_data = np.loadtxt('dataset/dataset_LR/test.data', delimiter=',')

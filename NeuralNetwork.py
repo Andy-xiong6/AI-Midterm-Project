@@ -13,14 +13,14 @@ class MLP:
             elif activation == 'relu':
                 self.activation = MLP.functions.relu
                 
-            self.weights = np.random.rand(n_input, n_output) # n_input x n_output
-            self.bias = np.random.rand(n_output) # n_output x 1
+            self.weights = np.random.rand(n_input, n_output) # n_input x 1
+            self.bias = np.random.rand(n_output) # 1 x 1
 
         def forward(self, x):
-            self.x = x # n_input x 1
-            self.z = np.dot(x, self.weights) + self.bias # n_output x 1
-            self.a = self.activation(self.z) # n_output x 1
-            return self.a
+            self.x = x # n x n_input
+            self.z = np.dot(x, self.weights) + self.bias # n x 1
+            self.a = self.activation(self.z) # n x 1
+            return self.activation(self.z)
         
         
         def backward(self, da):
@@ -65,13 +65,15 @@ class MLP:
                 self.loss = MLP.functions.MSE
             
         def forward(self, x):
-            self.x = x # n_input x 1
-            a = []
+            self.x = x # n x n_input
+            self.z = []
+            self.a = []
             for neuron in self.neurons:
-                output = neuron.forward(x)
-                a.append(output)
-            self.a = np.array(a).T
-            return self.a 
+                self.z.append(neuron.forward(x))
+                self.a.append(neuron.a)
+            self.z = np.array(self.z) # n_output x n
+            self.a = np.array(self.a) # n_output x n
+            return self.a.T # n x n_output
         
         def backward(self, da):
             dx = []
@@ -138,13 +140,14 @@ class MLP:
             activation = activations[i]
             if i == 0: # input layer
                 layer = MLP.Layer(n_input, hidden_number[i], activation)
-            elif i != len(hidden_number) - 1: # hidden layers
+            elif (i != len(hidden_number) - 1): # hidden layers
                 layer = MLP.Layer(hidden_number[i-1], hidden_number[i], activation)
             else: # output layer
                 layer = MLP.Layer(hidden_number[i], n_output, activation , OutputMode=True)
             self.layers.append(layer)
         
     def forward(self, x):
+        # x: n x n_input
         for layer in self.layers:
             x = layer.forward(x)
         return x
