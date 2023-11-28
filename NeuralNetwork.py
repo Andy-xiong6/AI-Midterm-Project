@@ -99,30 +99,30 @@ class MLP:
                     neuron.update(dw, db, alpha)
                     
     class functions:
-        def sigmoid(self, z , derivative=False):
+        def sigmoid(z , derivative=False):
             if derivative:
-                return self.sigmoid(z) * (1 - self.sigmoid(z))
+                return 1 / (1 + np.exp(-z)) * (1 - 1 / (1 + np.exp(-z)))
             return 1 / (1 + np.exp(-z))
         
         
-        def tanh(self, z, derivative=False):
+        def tanh(z, derivative=False):
             if derivative:
                 return 1 - np.square(np.tanh(z))
             return np.tanh(z)
         
-        def relu(self, z, derivative=False):
+        def relu(z, derivative=False):
             if derivative:
-                return self.d_relu(z)
+                return np.where(z > 0, 1, 0)
             return np.maximum(0, z)
         
-        def MSE(self, y, y_hat, derivative=False):
+        def MSE(y, y_hat, derivative=False):
             if derivative:
-                return self.d_MSE(y, y_hat)
+                return y_hat - y
             return np.mean(np.square(y - y_hat))
         
-        def cross_entropy(self, y, y_hat, derivative=False):
+        def cross_entropy(y, y_hat, derivative=False):
             if derivative:
-                return self.d_cross_entropy(y, y_hat)
+                return y_hat - y
             return -np.sum(y * np.log(y_hat))
         
     def __init__(self, n_input, n_output, hidden_number, activations):

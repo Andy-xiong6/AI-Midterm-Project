@@ -38,11 +38,11 @@ Multi-layer Perceptron with single hidden layer but different numbers of neurons
 '''
 #import data
 train_data = np.loadtxt('dataset/dataset_LR/train.data', delimiter=',')
-train_input = train_data[:,0:2].T
-train_label = train_data[:,2]
+train_input = train_data[:,0:2]
+train_label = train_data[:,2] # size: n x 1
 
 test_data = np.loadtxt('dataset/dataset_LR/test.data', delimiter=',')
-test_input = test_data[:,0:2].T
+test_input = test_data[:,0:2]
 test_label = test_data[:,2]
 
 
@@ -53,7 +53,7 @@ def one_hidden_layer_train(activation_function, epoch, learning_rate):
         hidden_numbers.clear()
         hidden_numbers.append(i)
         activations.append(activation_function)
-        mlp = MLP(len(train_input), len(train_label), hidden_numbers, activations)
+        mlp = MLP(train_input.shape[1], len(train_label), hidden_numbers, activations)
         mlp.train(train_input, train_label, epoch, learning_rate)
         mlp.predict(test_input)
         accuracy = np.sum(np.argmax(mlp.y_hat, axis=1) == np.argmax(test_label, axis=1)) / len(test_data)
