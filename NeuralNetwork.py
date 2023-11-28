@@ -163,7 +163,6 @@ class MLP:
     def predict(self, x):
         return self.forward(x)
     
-    def 
             
 
     

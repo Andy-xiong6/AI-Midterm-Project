@@ -5,11 +5,11 @@ import numpy as np
 LogisticRegression on binary classification
 '''
 #import data
-train_data = np.loadtxt('train.data', delimiter=',')
+train_data = np.loadtxt('dataset/dataset_LR/train.data', delimiter=',')
 train_input = train_data[:,0:2]
 train_label = train_data[:,2]
 
-test_data = np.loadtxt('test.data', delimiter=',')
+test_data = np.loadtxt('dataset/dataset_LR/test.data', delimiter=',')
 test_input = test_data[:,0:2]
 test_label = test_data[:,2]
 
@@ -37,11 +37,11 @@ print("accuracy: ", accuracy)
 Multi-layer Perceptron with single hidden layer but different numbers of neurons
 '''
 #import data
-train_data = np.loadtxt('train.data', delimiter=',')
+train_data = np.loadtxt('dataset/dataset_LR/train.data', delimiter=',')
 train_input = train_data[:,0:2].T
 train_label = train_data[:,2]
 
-test_data = np.loadtxt('test.data', delimiter=',')
+test_data = np.loadtxt('dataset/dataset_LR/test.data', delimiter=',')
 test_input = test_data[:,0:2].T
 test_label = test_data[:,2]
 
